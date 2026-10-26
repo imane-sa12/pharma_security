@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Administration des utilisateurs</h1>
+    <a class="btn" th:href="@{/home}">&larr; Accueil</a>
+
+    <!-- Messages flash envoyés par AdminController -->
+    <div class="error" th:if="${error}" th:text="${error}"></div>
+    <div class="success" th:if="${success}" th:text="${success}"></div>
+
+    <h2>Nouvel utilisateur</h2>
+    <form th:action="@{/admin/users/save}" method="post">
+        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
+        <select name="roleName">
+            <option th:each="r : ${roles}" th:value="${r.name}" th:text="${r.name}"></option>
+        </select>
+        <button type="submit">Créer</button>
+    </form>
+
+    <h2>Utilisateurs</h2>
+    <table>
+        <tr><th>ID</th><th>Utilisateur</th><th>Rôles</th><th>Action</th></tr>
+        <tr th:each="u : ${users}">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.username}"></td>
+            <td><span th:each="r : ${u.roles}" th:text="${r.name} + ' '"></span></td>
+            <td>
+                <form th:action="@{/admin/users/delete/{id}(id=${u.id})}" method="post">
+                    <button type="submit" class="danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Médicaments</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Médicaments</h1>
+    <a class="btn" th:href="@{/home}">&larr; Accueil</a>
+
+    <table>
+        <tr>
+            <th>Nom</th><th>Description</th><th>Prix (DH)</th><th>Stock</th>
+            <!-- Colonne d'actions visible seulement pour ADMIN / PHARMACIEN -->
+            <th sec:authorize="hasAnyRole('ADMIN','PHARMACIEN')">Actions</th>
+        </tr>
+        <tr th:each="m : ${medicaments}">
+            <td th:text="${m.nom}"></td>
+            <td th:text="${m.description}"></td>
+            <td th:text="${m.prix}"></td>
+            <td th:text="${m.stock}"></td>
+            <td sec:authorize="hasAnyRole('ADMIN','PHARMACIEN')">
+                <!-- Modifier le stock : ADMIN + PHARMACIEN -->
+                <form th:action="@{/medicaments/stock/{id}(id=${m.id})}" method="post" style="display:inline;">
+                    <input type="number" name="stock" th:value="${m.stock}" min="0" style="width:70px;">
+                    <button type="submit">Mettre à jour</button>
+                </form>
+                <!-- Supprimer : ADMIN uniquement -->
+                <form th:action="@{/medicaments/delete/{id}(id=${m.id})}" method="post" style="display:inline;"
+                      sec:authorize="hasRole('ADMIN')">
+                    <button type="submit" class="danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Ajout d'un médicament : ADMIN uniquement -->
+    <div sec:authorize="hasRole('ADMIN')">
+        <h2>Ajouter un médicament</h2>
+        <form th:action="@{/medicaments/save}" method="post">
+            <input type="text" name="nom" placeholder="Nom" required>
+            <input type="text" name="description" placeholder="Description">
+            <input type="number" step="0.01" name="prix" placeholder="Prix" required>
+            <input type="number" name="stock" placeholder="Stock" min="0" required>
+            <button type="submit">Ajouter</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

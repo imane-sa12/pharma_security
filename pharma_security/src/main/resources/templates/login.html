@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - Pharmacie</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container" style="max-width:400px;">
+    <h1>Connexion</h1>
+
+    <!-- Spring Security ajoute ?error en cas d'échec et ?logout après déconnexion -->
+    <div class="error" th:if="${param.error}">Identifiants incorrects.</div>
+    <div class="success" th:if="${param.logout}">Vous êtes déconnecté.</div>
+
+    <!-- Les champs DOIVENT s'appeler "username" et "password" (noms par défaut de Spring Security).
+         th:action ajoute automatiquement le jeton CSRF. -->
+    <form th:action="@{/login}" method="post">
+        <div><input type="text" name="username" placeholder="Nom d'utilisateur" required></div>
+        <div><input type="password" name="password" placeholder="Mot de passe" required></div>
+        <button type="submit">Se connecter</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+body { font-family: Arial, sans-serif; background:#f4f7f6; margin:0; }
+.container { max-width: 900px; margin: 40px auto; background:#fff; padding:24px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.1); }
+h1, h2 { color:#1b6b4a; }
+a.btn, button { background:#1b6b4a; color:#fff; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; text-decoration:none; display:inline-block; }
+button.danger { background:#b3261e; }
+table { width:100%; border-collapse:collapse; margin:16px 0; }
+th, td { border-bottom:1px solid #ddd; padding:8px; text-align:left; }
+th { background:#e8f3ee; }
+input, select { padding:6px; margin:4px 4px 4px 0; }
+.error { background:#fdecea; color:#b3261e; padding:8px; border-radius:4px; margin:8px 0; }
+.success { background:#e6f4ea; color:#1b6b4a; padding:8px; border-radius:4px; margin:8px 0; }
+.menu a { margin-right:8px; }

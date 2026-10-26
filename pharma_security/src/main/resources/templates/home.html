@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil - Pharmacie</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Gestion de pharmacie</h1>
+    <!-- sec:authentication affiche des infos sur l'utilisateur connecté -->
+    <p>Bienvenue <b sec:authentication="name"></b>
+       (rôles : <span sec:authentication="authorities"></span>)</p>
+
+    <!-- sec:authorize n'affiche l'élément que si la condition de rôle est vraie -->
+    <div class="menu">
+        <a class="btn" th:href="@{/admin}" sec:authorize="hasRole('ADMIN')">Administration</a>
+        <a class="btn" th:href="@{/medicaments}" sec:authorize="hasAnyRole('ADMIN','PHARMACIEN','CLIENT')">Médicaments</a>
+        <a class="btn" th:href="@{/ventes}" sec:authorize="hasAnyRole('ADMIN','PHARMACIEN','CAISSIER')">Ventes</a>
+    </div>
+
+    <!-- La déconnexion doit être un POST (avec jeton CSRF ajouté par th:action) -->
+    <form th:action="@{/logout}" method="post" style="margin-top:20px;">
+        <button type="submit" class="danger">Se déconnecter</button>
+    </form>
+</div>
+</body>
+</html>
